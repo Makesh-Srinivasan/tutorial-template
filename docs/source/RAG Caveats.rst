@@ -10,25 +10,25 @@ Similarly, the quality of the decoder-model is also a limiting factor in the qua
 There may be a slight delay in working with RAGs as compared to a traditional pure LLM because of the added retrieval component. This is not always the case but in general, this behaviour is expected. While there is indeed a slight computational overhead, this might prove to be useful in cases where recent or custom knowledge base is required, or in cases where a specific subset of a much larger context (significantly larger than the allowed context-window) is needed to answer questions, or in cases where it might be just quicker to process answers with context-rich and shorter context rather than the full-length context. More on this under the section “When is it good to use RAG?”
 
 Contextual Limitations
-----------------------
+----------------------------------------------------------------
 While RAG models are designed to enhance contextual understanding by retrieving relevant documents, they may still struggle with highly contextual or nuanced queries where specific expertise or deeper contextual awareness is required. This is because, they simply associate similarity between vectors in the latent embeddings space to determine which chunks (i.e., vectors) are relevant to the given query in order to build the retrieved context. They do not consider the nuanced and underlying semantically rich contexts or analogies to associate contexts with queries.
 
 Potential for Retrieval Errors
-------------------------------
+------------------------------------------------------------------------
 The retrieval component can sometimes fetch irrelevant or only partially relevant documents, leading to suboptimal or inaccurate responses. This is particularly challenging in cases where query ambiguity or document misalignment occurs. Sometimes, the documents contain non-english characters that may or may not be understood by the embedding models in which case the meanings are lost. Similarly, broken characters or non-unicodes can often be considered erroneous and may hinder the quality of the documents while building the RAG knowledge base.
 
 Handling of Multiple Truths
---------------------------
+--------------------------------------------------------------------
 In scenarios where multiple valid responses or perspectives exist, RAG models might either blend information from various sources or select one perspective over others, potentially omitting important viewpoints. This ties into the point of having high quality dataset for the knowledge base, and also using appropriate embedding techniques, chucking techniques, etc., to improve RAG’s outputs.
 
 Privacy and Security Concerns
-------------------------------
+------------------------------------------------------------------------
 Since RAG models access a wide range of documents, there is a risk of retrieving and exposing sensitive information unless proper data handling and privacy measures are implemented. Therefore, it is very important that the data be verified for API keys, passwords or other sensitive information before chunking and embedding into the vector database.
 
 Special Considerations for User Interaction
-------------------------------------------
+------------------------------------------------------------------------------------
 Users need to formulate queries clearly and specifically to maximise the effectiveness of the retrieval process. Ambiguous or overly broad queries can lead to poor retrieval results and less accurate answers. The prompts (aka, queries) must be well-designed, structured and clearly state the intention and objective (more on this under the section “Prompt-Engineering”) for the vectors to be associated well enough before retrieving appropriate documents and also for the subsequent generation part of the RAG pipeline. Users should be aware of the model's source of information (knowledge base) and adjust their expectations about the accuracy and relevance of the answers accordingly.
 
 Bias and Fairness
------------------
+-----------------------------------------------------------
 Similar to other AI systems, RAG models can inherit and even amplify biases present in their training data or retrieved documents. This requires continuous monitoring and adjustments to ensure fair and unbiased outputs. This, like many other points in this section, ties into the quality of the dataset.
